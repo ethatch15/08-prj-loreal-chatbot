@@ -1,3 +1,15 @@
+/* —— L'Oréal brand colors ——
+   L'Oréal's identity is built on black and white with a warm gold accent.
+   We save them as CSS variables so we can reuse them everywhere. */
+:root {
+  --loreal-black: #000000;
+  --loreal-white: #ffffff;
+  --loreal-gold: #b8955c; /* luxury gold accent */
+  --loreal-gold-light: #e9dcc6; /* soft gold for backgrounds */
+  --loreal-cream: #faf7f2; /* warm off-white */
+  --loreal-gray: #6b6b6b; /* secondary text */
+}
+
 /* —— basic reset —— */
 * {
   box-sizing: border-box;
@@ -5,10 +17,13 @@
   padding: 0;
 }
 
-/* —— body + fonts —— */
+/* —— body + fonts ——
+   L'Oréal's official typefaces are licensed, so we use Montserrat,
+   a free geometric sans-serif with a similar clean, elegant feel. */
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  color: var(--loreal-black);
+  background: var(--loreal-white);
   display: flex;
   justify-content: center;
 }
@@ -18,49 +33,75 @@ body {
   max-width: 900px;
 }
 
-/* header */
+/* —— header —— */
 .site-header {
   text-align: center;
   padding-top: 50px;
 }
 
-.site-title {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
+/* the L'Oréal logo */
+.site-logo {
+  width: 220px;
+  max-width: 70%;
+  height: auto;
+  display: block; /* puts the logo on its own line */
+  margin: 0 auto; /* centers it */
 }
 
-/* chat window */
+/* thin gold line under the logo */
+.site-title {
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3em; /* wide spacing = luxury look */
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--loreal-gold);
+  display: inline-block;
+}
+
+.site-tagline {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--loreal-gray);
+}
+
+/* —— chat window —— */
 .chatbox {
-  margin: 40px 0;
+  margin: 36px 0;
 }
 
 .chat-window {
-  height: 360px;
-  border: 1px solid #000;
-  padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
+  height: 400px;
+  border: 1px solid var(--loreal-black);
+  border-top: 4px solid var(--loreal-gold);
+  padding: 24px;
+  font-size: 16px;
+  line-height: 1.6;
   overflow-y: auto;
-  background: #fafafa;
-  white-space: pre-line;
+  background: var(--loreal-cream);
 }
 
-/* messages */
+/* —— messages —— */
 .msg {
-  margin-bottom: 14px;
-  line-height: 1.5;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  white-space: pre-line; /* keeps line breaks from the AI's reply */
 }
 
 .msg.user {
-  color: #000;
+  color: var(--loreal-black);
+  font-weight: 500;
 }
 
 .msg.ai {
-  color: #666666;
+  color: #333333;
+  padding-left: 12px;
+  border-left: 2px solid var(--loreal-gold);
 }
 
-/* input row */
+/* —— input row —— */
 .chat-form {
   display: flex;
   gap: 12px;
@@ -69,24 +110,23 @@ body {
 
 .chat-form input {
   flex: 1;
-  padding: 12px;
-  border: 1px solid #ccc;
-  font-size: 18px;
+  padding: 14px;
+  border: 1px solid #cccccc;
+  font-family: inherit;
+  font-size: 16px;
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--loreal-gold);
   outline-offset: 2px;
 }
 
 .chat-form button {
-  font-size: 18px;
-  background: #000;
-  color: #fff;
+  background: var(--loreal-black);
+  color: var(--loreal-white);
   border: none;
-  padding: 12px;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,15 +139,15 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: var(--loreal-gold);
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
+  outline: 2px solid var(--loreal-gold);
   outline-offset: 2px;
 }
 
-/* visually hidden */
+/* —— visually hidden (for screen readers only) —— */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -120,12 +160,14 @@ body {
   border: 0;
 }
 
-/* footer */
+/* —— footer —— */
 .site-footer {
   margin: 60px 0 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--loreal-gold-light);
   text-align: center;
-  font-size: 14px;
-  color: #666;
+  font-size: 13px;
+  color: var(--loreal-gray);
 }
 
 .site-footer nav {
@@ -134,10 +176,10 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--loreal-black);
   text-decoration: none;
 }
 
 .site-footer a:hover {
-  color: #666666;
+  color: var(--loreal-gold);
 }
