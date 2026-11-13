@@ -28,7 +28,15 @@ Rules:
 - Do not make up products. If you are not sure a product exists, say so.
 - Do not give medical advice. For serious skin conditions, suggest seeing a dermatologist.
 - Keep answers short, clear, and friendly. Use short lists for routines.
-- Write in plain text only. Do not use Markdown symbols like ** or # — the chat window shows them as plain characters. For lists, use numbers (1., 2.) or simple dashes (-).`;
+- Write in plain text only. Do not use Markdown symbols like ** or # — the chat window shows them as plain characters. For lists, use numbers (1., 2.) or simple dashes (-).
+- Remember details the user shares earlier in the conversation (like their name, skin type, or past questions) and use them in later answers.`;
+
+/* Conversation history.
+   This array holds EVERY message in the chat, in order.
+   We send the whole array each time, so the AI can "remember"
+   what was said earlier (like the user's name or past questions).
+   It starts with just the system prompt. */
+const messages = [{ role: "system", content: systemPrompt }];
 
 /* addMessage() puts one message on the screen.
    role is "user" or "ai" — it matches the .msg.user / .msg.ai styles in style.css.
@@ -71,6 +79,9 @@ chatForm.addEventListener("submit", async (e) => {
   // Show the user's message in the chat window
   addMessage("user", `You: ${question}`);
 
+  // Add the user's question to the conversation history
+  messages.push({ role: "user", content: question });
+
   // Clear the input box so it's ready for the next question
   userInput.value = "";
 
@@ -79,16 +90,11 @@ chatForm.addEventListener("submit", async (e) => {
 
   try {
     // 2. Send the request to the Cloudflare Worker.
-    // The body has a "messages" array: the system prompt first, then the user's question.
+    // We send the WHOLE conversation history, not just the latest question.
     const response = await fetch(WORKER_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: question },
-        ],
-      }),
+      body: JSON.stringify({ messages: messages }),
     });
 
     // Turn the response into a JavaScript object
@@ -97,13 +103,20 @@ chatForm.addEventListener("submit", async (e) => {
     // If OpenAI sent back an error (bad key, no credits, etc.), show it
     if (data.error) {
       replyDiv.textContent = `⚠️ ${data.error.message}`;
+      // Remove the unanswered question so the history stays tidy
+      messages.pop();
       return;
     }
 
     // 3. Pull the AI's reply out of the response and show it
     const reply = data.choices[0].message.content;
     replyDiv.textContent = reply;
+
+    // Save the AI's reply in the history too, so it remembers what it said
+    messages.push({ role: "assistant", content: reply });
   } catch (error) {
+    // Remove the unanswered question so the history stays tidy
+    messages.pop();
     // If anything goes wrong (bad URL, no internet, etc.), tell the user
     console.error("Chat request failed:", error);
     replyDiv.textContent =
