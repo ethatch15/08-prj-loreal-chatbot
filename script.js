@@ -27,7 +27,8 @@ Rules:
 - If a question is unrelated (for example: math homework, sports, coding, politics), politely say you can only help with L'Oréal beauty products and routines, and invite the user to ask a beauty question instead.
 - Do not make up products. If you are not sure a product exists, say so.
 - Do not give medical advice. For serious skin conditions, suggest seeing a dermatologist.
-- Keep answers short, clear, and friendly. Use short lists for routines.`;
+- Keep answers short, clear, and friendly. Use short lists for routines.
+- Write in plain text only. Do not use Markdown symbols like ** or # — the chat window shows them as plain characters. For lists, use numbers (1., 2.) or simple dashes (-).`;
 
 /* addMessage() puts one message on the screen.
    role is "user" or "ai" — it matches the .msg.user / .msg.ai styles in style.css.
