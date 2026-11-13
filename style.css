@@ -67,6 +67,25 @@ body {
   color: var(--loreal-gray);
 }
 
+/* —— latest question banner (sits right above the chat window) —— */
+.latest-question {
+  padding: 12px 16px;
+  background: var(--loreal-black);
+  color: var(--loreal-white);
+  font-size: 15px;
+  overflow-wrap: anywhere; /* long questions wrap instead of overflowing */
+}
+
+/* the small gold "Your question" label */
+.latest-question .label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--loreal-gold);
+  margin-bottom: 4px;
+}
+
 /* —— chat window —— */
 .chatbox {
   margin: 36px 0;

@@ -6,6 +6,7 @@
 const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
+const latestQuestion = document.getElementById("latestQuestion");
 
 /* The address of your Cloudflare Worker.
    The Worker holds the OpenAI API key and forwards our request to
@@ -75,6 +76,12 @@ chatForm.addEventListener("submit", async (e) => {
   if (!question) {
     return;
   }
+
+  // Show the latest question above the chat window.
+  // This replaces the old question each time, so it "resets" with every new one.
+  latestQuestion.innerHTML = `<span class="label">Your question</span>`;
+  latestQuestion.append(question); // append() adds the text safely as plain text
+  latestQuestion.hidden = false; // make the banner visible
 
   // Show the user's message in the chat window (as a bubble on the right)
   addMessage("user", question);
