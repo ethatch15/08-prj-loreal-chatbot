@@ -81,24 +81,50 @@ body {
   line-height: 1.6;
   overflow-y: auto;
   background: var(--loreal-cream);
+
+  /* Stack the message bubbles in a column */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-/* —— messages —— */
+/* —— message bubbles —— */
 .msg {
-  margin-bottom: 16px;
-  line-height: 1.6;
+  max-width: 75%; /* bubbles don't stretch across the whole window */
+  padding: 12px 16px;
+  border-radius: 18px;
+  line-height: 1.5;
   white-space: pre-line; /* keeps line breaks from the AI's reply */
+  overflow-wrap: anywhere; /* long words or links wrap instead of overflowing */
 }
 
+/* User bubbles: black, on the right (like your messages in a texting app) */
 .msg.user {
-  color: var(--loreal-black);
-  font-weight: 500;
+  align-self: flex-end;
+  background: var(--loreal-black);
+  color: var(--loreal-white);
+  border-bottom-right-radius: 4px; /* little "tail" corner */
 }
 
+/* AI bubbles: white with a gold border, on the left */
 .msg.ai {
+  align-self: flex-start;
+  background: var(--loreal-white);
   color: #333333;
-  padding-left: 12px;
-  border-left: 2px solid var(--loreal-gold);
+  border: 1px solid var(--loreal-gold-light);
+  border-left: 3px solid var(--loreal-gold);
+  border-bottom-left-radius: 4px; /* little "tail" corner */
+}
+
+/* On small screens, let bubbles use more of the width */
+@media (max-width: 600px) {
+  .chat-window {
+    padding: 14px;
+  }
+
+  .msg {
+    max-width: 88%;
+  }
 }
 
 /* —— input row —— */

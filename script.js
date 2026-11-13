@@ -76,8 +76,8 @@ chatForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Show the user's message in the chat window
-  addMessage("user", `You: ${question}`);
+  // Show the user's message in the chat window (as a bubble on the right)
+  addMessage("user", question);
 
   // Add the user's question to the conversation history
   messages.push({ role: "user", content: question });
